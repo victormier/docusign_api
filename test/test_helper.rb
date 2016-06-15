@@ -13,6 +13,12 @@ DOCUSIGN_DEFAULT_HEADERS = {
   'X-Docusign-Authentication' => \
     %r|<DocuSignCredentials>.*<Username>.+</Username>.*<Password>.+</Password>.*<IntegratorKey>.+</IntegratorKey>.*</DocuSignCredentials>|m
 }.freeze
+DOCUSIGN_SEND_ON_BEHALF_OF_HEADERS = {
+  'Accept'=>'application/json',
+  'Content-Type'=>'application/json',
+  'X-Docusign-Authentication' => \
+    %r|<DocuSignCredentials>.*<Username>.+</Username>.*<Password>.+</Password>.*<IntegratorKey>.+</IntegratorKey>.*<SendOnBehalfOf>.+</SendOnBehalfOf>.*</DocuSignCredentials>|m
+}.freeze
 
 def stub_docusign_login
   stub_request(:get, DOCUSIGN_LOGIN_URL).

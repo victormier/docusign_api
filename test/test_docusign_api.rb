@@ -48,4 +48,18 @@ class DocusignApiTest < Minitest::Test
     assert_requested @req
   end
 
+  def test_send_on_behalf_of
+    url = File.join(DOCUSIGN_ACCOUNT_BASE_URL, 'templates')
+    @req = stub_request(:get, url).
+      with(headers: DOCUSIGN_DEFAULT_HEADERS).
+      to_return( status: 200, body: '{}' )
+
+    api = DocusignApi.new username: 'username',
+                           password: 'password',
+                           integrator_key: '12345',
+                           send_on_behalf_of: 'nobody@e.e',
+                           login_url: 'https://demo.docusign.net/restapi/v2/login_information'
+    api.get '/templates'
+    assert_requested :get, url, headers: DOCUSIGN_SEND_ON_BEHALF_OF_HEADERS
+  end
 end

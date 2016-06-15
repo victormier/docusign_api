@@ -3,6 +3,7 @@ class DocusignApi
     @username = opts[:username] || docusign_const(:username)
     @password = opts[:password] || docusign_const(:password)
     @integrator_key = opts[:integrator_key] || docusign_const(:integrator_key)
+    @send_on_behalf_of = opts[:send_on_behalf_of] || docusign_const(:send_on_behalf_of)
     @login_url = opts[:login_url] || docusign_const(:login_url)
 
     fail "please initialize with Docusign credentials: username, password, integrator_key" unless @username && @password && @integrator_key && @login_url
@@ -36,6 +37,7 @@ private
           <Username>#{@username}</Username>
           <Password>#{@password}</Password>
           <IntegratorKey>#{@integrator_key}</IntegratorKey>
+          #{ @send_on_behalf_of && "<SendOnBehalfOf>#{@send_on_behalf_of}</SendOnBehalfOf>" }
         </DocuSignCredentials>
       }
     }
